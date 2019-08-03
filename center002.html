@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Sample</title>
+	<style>
+		body{
+			position:relative;
+			margin:0px;
+			width:100%;
+		}
+
+		/** 
+		vertical-alignはdisplay属性がinline要素またはtable-cell
+		ここではtable-cellを利用する
+		**/
+		div#main{
+			position:relative;
+			display:table-cell;
+			vertical-align:middle;
+			text-align:center;
+			background-color:#0000FF;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		div#sub{
+			position:relative;
+			display:inline-block;
+			background-color:#ffffff;
+			text-align:left;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		div.box{
+			display:inline-block;
+			width:200px;
+			height:200px;
+			background-color:#00005f;
+			margin: 0px;
+			margin-left:1px;
+			margin-right:1px;
+			padding: 0px;
+		}
+	</style>
+
+	<script>
+		function resizeWindow(){
+			// table-cellはブラウザ側で自動に変更されないので、JavaScriptで変更する。
+			var div = document.getElementById('main');
+			div.style.width = document.documentElement.clientWidth + 'px';
+			div.style.height = document.documentElement.clientHeight + 'px';
+
+			var boxs = document.getElementsByClassName('box');
+
+			// 横に何枚タイルを並べられるかをここで求めます
+			// 202は横幅の200pxとmargin分の2pxの合計値です。
+			var cnt = Math.floor(document.documentElement.clientWidth / 202);
+
+			var sub = document.getElementById('sub');
+			var subWidth = cnt * 202;
+			sub.style.width = subWidth + 'px';
+		}
+
+		window.onload = function(){
+			resizeWindow();
+		};
+
+		window.onresize = function(){
+			resizeWindow();
+		};
+	</script>
+</head>
+<body>
+	<div id="main">
+		<div id="sub">
+			<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
+		</div>
+	</div>
+</body>
+</html>
